@@ -1,0 +1,15 @@
+default: &default
+  telegram_token: 'telegram_token'
+  google_cloud_function_url: 'http://localhost:3000'
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
