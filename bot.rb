@@ -31,6 +31,7 @@ Telegram::Bot::Client.run(Settings.app[:telegram_token]) do |bot|
                 place: place }
       response = RestClient.post(Settings.app[:google_cloud_function_url], { spend_event: event }.to_json, { context_type: :json })
       response_message = JSON.parse(response.body)['message'] rescue 'Event cannot be processed'
+      puts response_message
       bot.api.send_message(chat_id: message.chat.id, text: response_message)
     else
       puts "Wrong format! #{FORMAT_MESSAGE}"
