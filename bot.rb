@@ -17,8 +17,10 @@ class Settings
 end
 
 Telegram::Bot::Client.run(Settings.app[:telegram_token]) do |bot|
+  puts "Started!"
   bot.listen do |message|
     if message.text == '/start'
+      puts '/start'
       bot.api.send_message(chat_id: message.chat.id, text: "#{GREETINGS.sample}, #{message.from.first_name}!\n#{FORMAT_MESSAGE}")
     elsif AVAILABLE_EXPENSE_SIZES.include?(message.text.split(';').count)
       amount, currency, category, place = message.text.split(';')
@@ -28,8 +30,10 @@ Telegram::Bot::Client.run(Settings.app[:telegram_token]) do |bot|
                 category: category,
                 place: place }
       response = RestClient.post(Settings.app[:google_cloud_function_url], { spend_event: event }.to_json, { context_type: :json })
-      bot.api.send_message(chat_id: message.chat.id, text: (JSON.parse(response.body)['message'] rescue 'Event cannot be processed'))
+      response_message = JSON.parse(response.body)['message'] rescue 'Event cannot be processed'
+      bot.api.send_message(chat_id: message.chat.id, text: response_message)
     else
+      puts "Wrong format! #{FORMAT_MESSAGE}"
       bot.api.send_message(chat_id: message.chat.id, text: "Wrong format! #{FORMAT_MESSAGE}")
     end
   end
