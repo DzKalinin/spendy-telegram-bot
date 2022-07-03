@@ -1,0 +1,13 @@
+[Unit]
+Description=Spendy Telegram Bot Events Processor
+
+[Service]
+User=dmitrykalinin94
+Group=dmitrykalinin94
+WorkingDirectory=/home/dmitrykalinin94/spendy-telegram-bot/
+Environment=RACK_ENV=production
+Restart=always
+ExecStart=/bin/bash -lc "rvm-exec $(cat .ruby-version)@$(cat .ruby-gemset) bundle exec ruby bot.rb"
+
+[Install]
+WantedBy=multi-user.target
