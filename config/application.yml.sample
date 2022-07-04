@@ -1,6 +1,7 @@
 default: &default
   telegram_token: 'telegram_token'
-  google_cloud_function_url: 'http://localhost:3000'
+  google_cloud_function_url: 'http://localhost:3000/'
+  spendy_reporting_url: 'http://localhost:8080/'
 
 development:
   <<: *default
