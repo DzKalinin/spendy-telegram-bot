@@ -7,6 +7,6 @@ class AppLogger
   private
 
   def self.logger
-    @logger ||= Logger.new('logs/bot.log', 7, 1024)
+    @logger ||= Logger.new('logs/bot.log', 7, 1024 * 50)
   end
 end
