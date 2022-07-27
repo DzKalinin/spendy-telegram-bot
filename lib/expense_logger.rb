@@ -12,14 +12,14 @@ class ExpenseLogger
               currency: currency,
               category: category,
               place: place }
-    response = push_to_spendy_events_processor(event)
+    response = push_to_spendy_events_processor(event, message.from.username)
     JSON.parse(response.body)['message'] rescue 'Event cannot be processed'
   end
 
   private
 
-  def self.push_to_spendy_events_processor(event)
-    AppLogger.info("POST: #{Settings.app[:google_cloud_function_url]}, PAYLOAD: #{{ spend_event: event}.inspect}, HEADERS: #{{ context_type: :json }}")
+  def self.push_to_spendy_events_processor(event, user_name)
+    AppLogger.info("#{user_name} - POST: #{Settings.app[:google_cloud_function_url]}, PAYLOAD: #{{ spend_event: event}.inspect}, HEADERS: #{{ context_type: :json }}")
     RestClient.post(Settings.app[:google_cloud_function_url], { spend_event: event }.to_json, { context_type: :json })
   end
 end

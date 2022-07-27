@@ -39,7 +39,7 @@ class ReportBuilder
 
     def _agg_spend_for(user_name, endpoint)
       url = "#{Settings.app[:spendy_reporting_url]}#{endpoint}?user_name=#{user_name}&start_date=#{start_date}&end_date=#{end_date}"
-      AppLogger.info("GET: #{url}")
+      AppLogger.info("#{user_name} - GET: #{url}")
       RestClient.get(url)
     end
 
