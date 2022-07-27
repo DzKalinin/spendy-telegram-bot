@@ -8,7 +8,7 @@ class ReportBuilder
           'No expenses in this month!'
         else
           spends.each_with_object('') do |spend_hash, msg|
-            msg << "#{spend_hash['agg_field_value']}: #{spend_hash['amount']} #{spend_hash['currency']}\n"
+            msg << "#{spend_hash['agg_field_value']}: #{spend_hash['amount']} #{spend_hash['currency']}, Expenses count: #{spend_hash['expenses_count']}\n"
           end.strip
         end
       rescue Exception => ex
